@@ -19,7 +19,6 @@ class Areagestiondeconocimiento(models.Model):
     fechadecreacion = models.DateField(db_column='fechaDeCreacion')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'areagestiondeconocimiento'
 
@@ -28,7 +27,6 @@ class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'auth_group'
 
@@ -39,7 +37,6 @@ class AuthGroupPermissions(models.Model):
     permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'auth_group_permissions'
         unique_together = (('group', 'permission'),)
@@ -51,7 +48,6 @@ class AuthPermission(models.Model):
     codename = models.CharField(max_length=100)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'auth_permission'
         unique_together = (('content_type', 'codename'),)
@@ -70,7 +66,6 @@ class AuthUser(models.Model):
     date_joined = models.DateTimeField()
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'auth_user'
 
@@ -81,7 +76,6 @@ class AuthUserGroups(models.Model):
     group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'auth_user_groups'
         unique_together = (('user', 'group'),)
@@ -93,7 +87,6 @@ class AuthUserUserPermissions(models.Model):
     permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'auth_user_user_permissions'
         unique_together = (('user', 'permission'),)
@@ -107,7 +100,6 @@ class Boletinsiun(models.Model):
     fechalanzamiento = models.DateField(db_column='fechaLanzamiento')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'boletinsiun'
 
@@ -124,7 +116,6 @@ class Comite(models.Model):
     numerodeintegrantes = models.IntegerField(db_column='numeroDeIntegrantes')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'comite'
 
@@ -147,7 +138,6 @@ class Convocatoria(models.Model):
         'Vicerrectoriainvestigacion', models.DO_NOTHING, db_column='idVicerrectoriaInvestigacion')  # Field name made lowercase.
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'convocatoria'
 
@@ -163,7 +153,6 @@ class DjangoAdminLog(models.Model):
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'django_admin_log'
 
@@ -173,7 +162,6 @@ class DjangoContentType(models.Model):
     model = models.CharField(max_length=100)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'django_content_type'
         unique_together = (('app_label', 'model'),)
@@ -186,7 +174,6 @@ class DjangoMigrations(models.Model):
     applied = models.DateTimeField()
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'django_migrations'
 
@@ -197,7 +184,6 @@ class DjangoSession(models.Model):
     expire_date = models.DateTimeField()
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'django_session'
 
@@ -216,7 +202,6 @@ class Facultad(models.Model):
     idsede = models.ForeignKey('Sede', models.DO_NOTHING, db_column='idSede')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'facultad'
 
@@ -246,7 +231,6 @@ class Grupoinvestigacion(models.Model):
         'Instituto', models.DO_NOTHING, db_column='idInstituto', blank=True, null=True)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'grupoinvestigacion'
 
@@ -264,7 +248,6 @@ class Infraestructura(models.Model):
         Areagestiondeconocimiento, models.DO_NOTHING, db_column='idAreaGestionDeConocimiento')  # Field name made lowercase.
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'infraestructura'
 
@@ -280,7 +263,6 @@ class Instituto(models.Model):
     numerodegrupos = models.IntegerField(db_column='numeroDeGrupos')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'instituto'
 
@@ -297,7 +279,6 @@ class Integrantecomite(models.Model):
     fechadeingreso = models.DateField(db_column='fechaDeIngreso')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'integrantecomite'
         unique_together = (('idcomite', 'idintegrantevicerrectoria'),)
@@ -312,10 +293,9 @@ class Integrantegrupo(models.Model):
         'Persona', models.DO_NOTHING, db_column='idPersona')
     # Field name made lowercase.
     fechaingreso = models.DateField(db_column='fechaIngreso')
-    rol = models.CharField(max_length=60, blank=True, null=True)
+    rol = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'integrantegrupo'
         unique_together = (('idgrupoinvestigacion', 'idpersona'),)
@@ -330,10 +310,9 @@ class Integranteproyecto(models.Model):
         'Persona', models.DO_NOTHING, db_column='idPersona')
     # Field name made lowercase.
     fechaingreso = models.DateField(db_column='fechaIngreso')
-    rol = models.CharField(max_length=60, blank=True, null=True)
+    rol = models.CharField(max_length=45)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'integranteproyecto'
         unique_together = (('idproyecto', 'idpersona'),)
@@ -349,7 +328,6 @@ class Integrantepublicacion(models.Model):
     rol = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'integrantepublicacion'
         unique_together = (('idpersona', 'idpublicacion'),)
@@ -370,7 +348,6 @@ class Integrantevicerrectoria(models.Model):
         'Persona', models.DO_NOTHING, db_column='idPersona')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'integrantevicerrectoria'
 
@@ -378,6 +355,7 @@ class Integrantevicerrectoria(models.Model):
 class Persona(models.Model):
     # Field name made lowercase.
     idpersona = models.IntegerField(db_column='idPersona', primary_key=True)
+    clave = models.CharField(max_length=40)
     nombre = models.CharField(max_length=45)
     apellido = models.CharField(max_length=45)
     # Field name made lowercase.
@@ -386,7 +364,6 @@ class Persona(models.Model):
     edad = models.IntegerField()
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'persona'
 
@@ -401,7 +378,6 @@ class Producto(models.Model):
         'Proyecto', models.DO_NOTHING, db_column='idProyecto')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'producto'
 
@@ -420,7 +396,6 @@ class Propuesta(models.Model):
         Areagestiondeconocimiento, models.DO_NOTHING, db_column='idAreaGestionDeConocimiento')  # Field name made lowercase.
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'propuesta'
 
@@ -439,7 +414,6 @@ class Proyecto(models.Model):
         Convocatoria, models.DO_NOTHING, db_column='idconvocatoria', blank=True, null=True)
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'proyecto'
 
@@ -463,7 +437,6 @@ class Publicacion(models.Model):
         'Vicerrectoriainvestigacion', models.DO_NOTHING, db_column='idVicerrectoriaInvestigacion')  # Field name made lowercase.
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'publicacion'
 
@@ -484,7 +457,6 @@ class Sede(models.Model):
         'Vicerrectoriainvestigacion', models.DO_NOTHING, db_column='idVicerrectoriaInvestigacion')  # Field name made lowercase.
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'sede'
 
@@ -498,6 +470,5 @@ class Vicerrectoriainvestigacion(models.Model):
     presupuestofondo = models.IntegerField(db_column='presupuestoFondo')
 
     class Meta:
-        app_label = 'investigacionApp'
         managed = False
         db_table = 'vicerrectoriainvestigacion'
