@@ -5,6 +5,9 @@
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
+
+#  En Django, un modelo es una clase de Python que define la estructura
+#  y el comportamiento de los datos almacenados en una base de datos.
 from django.db import models
 
 
