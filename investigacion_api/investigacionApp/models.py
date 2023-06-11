@@ -362,6 +362,17 @@ class Persona(models.Model):
     nivelacademico = models.CharField(
         db_column='nivelAcademico', max_length=45)
     edad = models.IntegerField()
+    rol = models.CharField(max_length=30)
+
+    def check_password(self, raw_password):
+        # Implement the logic to check if the provided password matches
+        # the hashed password stored in your MySQL table
+        # Return True if the password matches, False otherwise
+        # You may need to customize this method based on your specific authentication mechanism
+        # For example, if you are using bcrypt, you can use bcrypt's check_password_hash method
+        # to compare the provided raw password with the stored hashed password.
+        # You would need to import bcrypt and modify this code accordingly.
+        return self.clave == raw_password
 
     class Meta:
         managed = False
