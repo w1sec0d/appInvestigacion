@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+
 import * as React from 'react';
 
 function getCSRFToken() {
@@ -31,7 +32,10 @@ function Copyright(props) {
 
 export default function LoginView() {
 
-  const handleSubmit = (event) => {
+  const csfrtoken = getCSRFToken();
+
+  const handleSubmit = async (event) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -39,22 +43,27 @@ export default function LoginView() {
       password: data.get('clave'),
     });
 
-    console.log(getCSRFToken())
-
-    axios.post('http://localhost:8000/api-auth/login/', {
-      username: data.get('id'),
-      password: data.get('clave'),
-    }, {
-      headers: {
-        'X-CSRFToken': getCSRFToken(), // Set the CSRF token in the request headers
-      },
-    })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
+    try {
+      const response = await axios.post('http://localhost:8000/custom-login/', {
+        usuario: data.get('id'),
+        clave: data.get('clave'),
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
       });
+      if (response.data.success) {
+        console.log('Login successful:', response.data);
+      } else {
+        // Login failed, display error message or handle accordingly
+        console.log('Login failed:', response.data.message);
+      }
+      // Perform any necessary actions after successful login
+    } catch (error) {
+      console.error('Login failed:', error.response.data);
+      // Handle login failure
+    }
+
   };
 
   return (
@@ -110,6 +119,10 @@ export default function LoginView() {
               type="password"
               id="clave"
               autoComplete="current-password"
+            />
+            <TextField
+              value={csfrtoken}
+              name="csrfmiddlewaretoken"
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

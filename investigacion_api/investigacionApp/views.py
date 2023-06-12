@@ -1,16 +1,38 @@
 # Una vista es una clase o funcion en python que recibe una peticion http
 # y retorna una respuesta http
 
-from django.contrib.auth import login
+import json
+
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import (csrf_exempt, csrf_protect,
+                                          ensure_csrf_cookie)
+from django.views.decorators.http import require_POST
 from rest_framework import permissions, viewsets
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Persona
 from .serializers import PersonaSerializer
+
+
+@csrf_exempt
+def custom_login(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data.get("usuario")
+        password = data.get("clave")
+        print(username)
+        print(password)
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'message': 'Invalid credentials', 'username': username, 'password': password})
 
 
 # Vista de persona que usa la clase del framework REST de Django
