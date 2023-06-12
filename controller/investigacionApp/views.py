@@ -17,6 +17,10 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Persona
 from .serializers import PersonaSerializer
 
+# Vista personalizada para manejar el login. Es re recibe un json de react
+# y autentica en el sistema de django. Retorna success si la respuesta
+# fue satisfactoria
+
 
 @csrf_exempt
 def custom_login(request):
@@ -24,8 +28,6 @@ def custom_login(request):
         data = json.loads(request.body)
         username = data.get("usuario")
         password = data.get("clave")
-        print(username)
-        print(password)
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
