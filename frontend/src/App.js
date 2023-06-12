@@ -5,10 +5,12 @@ import { StudentView } from './views/StudentView';
 
 
 const App = () => {
+
   return (
     <Routes>
       <Route path="/" element={< LoginView />} />
       <Route path="/estudiante" element={<StudentView />} />
+      {/* <Route path='/admin' render={redirect()} /> */}
     </Routes>
   )
 }

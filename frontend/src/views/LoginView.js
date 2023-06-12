@@ -15,7 +15,7 @@ import withReactContent from 'sweetalert2-react-content';
 import hemeroteca from "../img/hemeroteca.jpg";
 
 
-import * as React from 'react';
+import React from 'react';
 
 function getCSRFToken() {
   const csrfCookie = document.cookie.match('(^|;)\\s*csrftoken\\s*=\\s*([^;]+)');
@@ -42,6 +42,7 @@ export default function LoginView() {
   const MySwal = withReactContent(Swal)
 
 
+
   const handleSubmit = async (event) => {
 
     event.preventDefault();
@@ -62,14 +63,17 @@ export default function LoginView() {
       });
       if (response.data.success) {
         console.log('Login successful:', response.data);
-        navigate('/estudiante', { state: response.data });
+        if (response.data.admin) {
+          window.location.assign('http://localhost:8000/admin')
+        } else {
+          navigate('/estudiante', { state: response.data });
+        }
       } else {
         // Login failed, display error message or handle accordingly
         MySwal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: '¡Has ingresado un usuario incorrecto!',
-          footer: 'Porfavor intentalo de nuevo'
+          text: '¡Has ingresado un usuario incorrecto! Porfavor intentalo de nuevo',
         })
       }
       // Perform any necessary actions after successful login

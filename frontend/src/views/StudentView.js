@@ -1,14 +1,14 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import Dashboard from '../components/dashboard/Dashboard';
 
 export const StudentView = () => {
   const { state } = useLocation();
-  const { username } = state;
+  const { username, password } = state;
 
   return (
     <div>
-      <div>StudentView</div>
-      <p>BUEN DIA GRUPO BIENVENIDO USUARIO {username}</p>
+      <Dashboard />
     </div>
   )
 }
