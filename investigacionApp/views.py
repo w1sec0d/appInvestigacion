@@ -6,11 +6,8 @@ import json
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import (csrf_exempt, csrf_protect,
-                                          ensure_csrf_cookie)
-from django.views.decorators.http import require_POST
-from rest_framework import permissions, viewsets
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -32,9 +29,9 @@ def custom_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return JsonResponse({'success': True})
+            return JsonResponse({'success': True, 'admin': user.is_superuser, 'message': 'Valid credentials', 'username': username, 'password': password})
         else:
-            return JsonResponse({'success': False, 'message': 'Invalid credentials', 'username': username, 'password': password})
+            return JsonResponse({'success': False, 'admin': False, 'message': 'Invalid credentials', 'username': username, 'password': password})
 
 
 # Vista de persona que usa la clase del framework REST de Django

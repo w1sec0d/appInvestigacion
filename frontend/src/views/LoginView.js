@@ -9,6 +9,11 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import hemeroteca from "../img/hemeroteca.jpg";
+
 
 import * as React from 'react';
 
@@ -22,7 +27,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        UNAL
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -33,6 +38,9 @@ function Copyright(props) {
 export default function LoginView() {
 
   const csfrtoken = getCSRFToken();
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal)
+
 
   const handleSubmit = async (event) => {
 
@@ -54,9 +62,15 @@ export default function LoginView() {
       });
       if (response.data.success) {
         console.log('Login successful:', response.data);
+        navigate('/estudiante', { state: response.data });
       } else {
         // Login failed, display error message or handle accordingly
-        console.log('Login failed:', response.data.message);
+        MySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Has ingresado un usuario incorrecto!',
+          footer: 'Porfavor intentalo de nuevo'
+        })
       }
       // Perform any necessary actions after successful login
     } catch (error) {
@@ -75,7 +89,7 @@ export default function LoginView() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+          backgroundImage: `url(${hemeroteca})`,
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -123,6 +137,7 @@ export default function LoginView() {
             <TextField
               value={csfrtoken}
               name="csrfmiddlewaretoken"
+              type="hidden"
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
