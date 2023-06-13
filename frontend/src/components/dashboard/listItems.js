@@ -1,72 +1,71 @@
-import * as React from 'react';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import DescriptionIcon from '@mui/icons-material/Description';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import PeopleIcon from '@mui/icons-material/People';
+import SchoolIcon from '@mui/icons-material/School';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import * as React from 'react';
+import { HashLink } from 'react-router-hash-link';
+
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItemButton>
+    <HashLink smooth to='/estudiante/#personal' >
+      <ListItemButton>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItemButton>
+    </HashLink>
+    <HashLink smooth to='/estudiante/#publicaciones' >
+      <ListItemButton>
+        <ListItemIcon>
+          <DescriptionIcon />
+        </ListItemIcon>
+        <ListItemText primary="Publicaciones" />
+      </ListItemButton>
+    </HashLink>
+    <HashLink smooth to='/estudiante/#grupos' >
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Grupos" />
+      </ListItemButton>
+    </HashLink>
+    <HashLink smooth to='/estudiante/#proyectos' >
+      <ListItemButton>
+        <ListItemIcon>
+          <ConstructionIcon />
+        </ListItemIcon>
+        <ListItemText primary="Proyectos" />
+      </ListItemButton>
+    </HashLink>
+    <HashLink smooth to='/estudiante/#areaConocimiento' >
+      <ListItemButton>
+        <ListItemIcon>
+          <SchoolIcon />
+        </ListItemIcon>
+        <ListItemText primary="Áreas de conocimiento" />
+      </ListItemButton>
+    </HashLink>
+    <HashLink smooth to='/estudiante/#infraestructura' >
+      <ListItemButton>
+        <ListItemIcon>
+          <HomeWorkIcon />
+        </ListItemIcon>
+        <ListItemText primary="Infraestructura" />
+      </ListItemButton>
+    </HashLink>
   </React.Fragment>
 );
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset>
-      Saved reports
-    </ListSubheader>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItemButton>
+
   </React.Fragment>
 );

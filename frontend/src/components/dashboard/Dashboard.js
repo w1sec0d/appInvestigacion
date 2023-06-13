@@ -1,26 +1,60 @@
-import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import DescriptionIcon from '@mui/icons-material/Description';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import PeopleIcon from '@mui/icons-material/People';
+import SchoolIcon from '@mui/icons-material/School';
+import { Paper } from '@mui/material';
+import MuiAppBar from '@mui/material/AppBar';
+import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CssBaseline from '@mui/material/CssBaseline';
+import Divider from '@mui/material/Divider';
+import MuiDrawer from '@mui/material/Drawer';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import Stack from '@mui/material/Stack';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { Container } from '@mui/system';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import ActionAreaCardAa from '../AreasConocimiento/Areaa';
+import ActionAreaCardAb from '../AreasConocimiento/Areab';
+import ActionAreaCardAc from '../AreasConocimiento/Areac';
+import ActionAreaCardAd from '../AreasConocimiento/Aread';
+import ActionAreaCardA from '../AreasConocimiento/Areaf';
+import ActionAreaCardg from '../GrupoInvestigacion/Grupo';
+import ActionAreaCardga from '../GrupoInvestigacion/Grupoa';
+import ActionAreaCardgb from '../GrupoInvestigacion/Grupob';
+import ActionAreaCardgc from '../GrupoInvestigacion/Grupoc';
+import ActionAreaCardgd from '../GrupoInvestigacion/Grupod';
+import ActionAreaCardge from '../GrupoInvestigacion/Grupoe';
+import ActionAreaCardF from '../Infraestructura/Infra';
+import ActionAreaCardFb from '../Infraestructura/Infrab';
+import ActionAreaCardFc from '../Infraestructura/Infrac';
+import ActionAreaCardFd from '../Infraestructura/Infrad';
+import ActionAreaCardFe from '../Infraestructura/Infrae';
+import ActionAreaCardPa from '../Proyectos/Carda';
+import ActionAreaCardPc from '../Proyectos/Cardac';
+import ActionAreaCardPb from '../Proyectos/Cardb';
+import ActionAreaCard from '../Publicacion/Publi';
+import ActionAreaCarda from '../Publicacion/Publia';
+import ActionAreaCardb from '../Publicacion/Publib';
+import ActionAreaCardc from '../Publicacion/Public';
+import ActionAreaCardd from '../Publicacion/Publid';
+import ActionAreaCarde from '../Publicacion/Publie';
+
+import "./Dashboard.css";
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+
 
 function Copyright(props) {
   return (
@@ -84,11 +118,29 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [open, setOpen] = React.useState(true);
+  const [persona, setPersona] = React.useState("");
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    async function getPersona(idpersona) {
+      try {
+        const response = await axios.get(`http://localhost:8000/Personas/${idpersona}/?format=json`);
+        if (response.status === 200) {
+          setPersona(response.data);
+          // Do something with the nombre
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        // Handle the error
+      }
+    };
+    getPersona(props.state.username)
+  }, []);
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -119,7 +171,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              ¡Bienvenido {persona.nombre}!
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -148,57 +200,87 @@ export default function Dashboard() {
             {secondaryListItems}
           </List>
         </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
+
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Paper sx={{ p: 4, alignItems: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 10, flexWrap: 'wrap' }}>
+                <Typography variant="h3" sx={{ width: 500, marginBottom: 5 }} id="personal">
+                  Información Personal
+                </Typography>
+                <Card variant="outlined" sx={{ padding: 5 }}>
+                  <Stack direction="row" alignItems="center" gap={1}>
+                    <AccountCircleIcon sx={{ fontSize: 80, margin: 'auto' }} />
+                  </Stack>
+                  <Typography sx={{ fontSize: 18, marginTop: 5 }} gutterBottom>
+                    <b>{persona.rol}</b>: {persona.nombre} {persona.apellido}
+                  </Typography>
+                  <p><b>Nivel Académico: </b>{persona.nivelacademico}</p>
+                  <p><b>Edad: </b>{persona.edad}</p>
+                </Card>
+              </Paper>
+              <Typography variant="h3" sx={{ marginTop: 5, marginBottom: 5, textAlign: 'center' }} id="publicaciones">
+                <DescriptionIcon sx={{ fontSize: 50, margin: 'auto' }} /> Publicaciones
+              </Typography>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCard />
+                <ActionAreaCarda />
+                <ActionAreaCardb />
+              </Paper>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCardc />
+                <ActionAreaCardd />
+                <ActionAreaCarde />
+              </Paper>
+              <Typography variant="h3" sx={{ marginTop: 5, marginBottom: 5, textAlign: 'center' }} id="grupos">
+                <PeopleIcon sx={{ fontSize: 50 }} /> Grupos
+              </Typography>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCardg />
+                <ActionAreaCardga />
+                <ActionAreaCardgb />
+              </Paper>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCardgc />
+                <ActionAreaCardgd />
+                <ActionAreaCardge />
+              </Paper>
+              <Typography variant="h3" sx={{ marginTop: 5, marginBottom: 5, textAlign: 'center' }} id="proyectos">
+                <ConstructionIcon sx={{ fontSize: 50 }} /> Proyectos
+              </Typography>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCardPa />
+                <ActionAreaCardPb />
+                <ActionAreaCardPc />
+              </Paper>
+              <Typography variant="h3" sx={{ marginTop: 5, marginBottom: 5, textAlign: 'center' }} id="areaConocimiento">
+                <SchoolIcon sx={{ fontSize: 50 }} /> Areas de conocimiento
+              </Typography>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCardA />
+                <ActionAreaCardAa />
+                <ActionAreaCardAb />
+              </Paper>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCardAc />
+                <ActionAreaCardAd />
+              </Paper>
+              <Typography variant="h3" sx={{ marginTop: 5, marginBottom: 5, textAlign: 'center' }} id="infraestructura">
+                <HomeWorkIcon sx={{ fontSize: 50 }} /> Infraestructura
+              </Typography>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCardF />
+                <ActionAreaCardFb />
+                <ActionAreaCardFc />
+              </Paper>
+              <Paper sx={{ p: 4, display: 'flex', flexDirection: 'row' }}>
+                <ActionAreaCardFd />
+                <ActionAreaCardFe />
+              </Paper>
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
-        </Box>
+          </Grid>
+          <Copyright sx={{ pt: 4 }} />
+        </Container>
       </Box>
     </ThemeProvider>
   );
